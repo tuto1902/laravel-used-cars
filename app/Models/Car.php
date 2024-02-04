@@ -10,6 +10,10 @@ class Car extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'images' => 'json'
+    ];
+
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
