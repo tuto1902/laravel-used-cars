@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('model');
             $table->string('year');
+            $table->integer('price');
             $table->json('images');
             $table->foreignIdFor(Brand::class)->cascadeOnDelete();
             // $table->foreignId('brand_id')->constrained('brands')->cascadeOnDelete();
