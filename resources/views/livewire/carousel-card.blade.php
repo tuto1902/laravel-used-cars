@@ -15,13 +15,13 @@
             }
         }
     }"
-    class="flex flex-col h-full min-h-72 md:min-h-96 bg-white shadow-2xl rounded-xl dark:bg-gray-900"
+    class="flex flex-col h-full min-h-72 md:min-h-40 bg-white shadow-2xl rounded-xl dark:bg-gray-900"
 >
     <!-- Carousel -->
     <div class="flex flex-col flex-1 justify-center items-center relative">
-        <div class="h-full w-full bg-whiterounded-t-xl border border-gray-200 dark:border-gray-50/10 dark:bg-gray-900">
+        <div class="h-full w-full bg-white rounded-t-xl border border-gray-200 dark:border-gray-50/10 dark:bg-gray-900">
             <div class="flex justify-center h-full bg-gradient-to-r from-indigo-500/50 via-purple-500/50 to-pink-500/50 rounded-t-xl">
-                <div class="bg-cover bg-center bg-norepat h-full w-full p-0 min-h-52 md:min-h-80 rounded-t-xl" x-bind:style="`background-image: url('storage/${images[selected]}');`"></div>
+                <div class="bg-cover bg-center bg-norepat h-full w-full p-0 min-h-52 md:min-h-40 rounded-t-xl" x-bind:style="`background-image: url('storage/${images[selected]}');`"></div>
             </div>
         </div>
         <button x-on:click="previousImage()" type="button" class=" absolute inset-y-0 start-0 inline-flex justify-center items-center w-[46px] h-full text-gray-600 hover:bg-gray-900/[.1] rounded-tl-xl">
@@ -43,7 +43,7 @@
 
         <div class="flex justify-center absolute -bottom-5 start-0 end-0 space-x-2">
             <template x-for="(image, index) in images">
-                <span x-on:click="selected = index" x-bind:class="{'bg-blue-600 dark:bg-amber-600': index == selected}" class="w-3 h-3border border-blue-600 dark:border-amber-600 rounded-full cursor-pointer"></span>
+                <span x-on:click="selected = index" x-bind:class="{'bg-slate-800 dark:bg-slate-600': index == selected}" class="w-3 h-3 border border-slate-800 dark:border-slate-600 rounded-full cursor-pointer"></span>
             </template>
         </div>
     </div>
@@ -52,5 +52,6 @@
         <h3 class=" text-base font-semibold text-gray-800 dark:text-gray-300">
             {{ $car->brand->name }} {{ $car->model }} {{ $car->year }}
         </h3>
+        <p>{{$car->formatted_price }}</p>
     </div>
 </div>

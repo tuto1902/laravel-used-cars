@@ -28,17 +28,11 @@ class CarList extends Component implements HasTable, HasForms
         return $table
             ->query(Car::query())
             ->contentGrid([
-                'md' => 2,
-                'xl' => 3,
+                'md' => 4,
+                'xl' => 6,
             ])
             ->recordClasses(['!ring-0 !shadow-none'])
             ->columns([
-                // Tables\Columns\Layout\Stack::make([
-                //     Tables\Columns\TextColumn::make('brand.name'),
-                //     Tables\Columns\TextColumn::make('model'),
-                //     Tables\Columns\TextColumn::make('year'),
-                //     Tables\Columns\TextColumn::make('images'),
-                // ]),
                 Tables\Columns\Layout\View::make('cars.table.row-content')
             ])
             ->filters([

@@ -3,6 +3,7 @@
 use App\Livewire\CarList;
 use App\Models\Brand;
 use App\Models\Car;
+use Illuminate\Support\Number;
 
 it('renders the car list component', function () {
     Livewire::test(CarList::class)
@@ -74,4 +75,19 @@ it('shows a list of images', function () {
         ->assertSeeText([
             'image1.jpg', 'image2.jpg', 'image2.jpg'
         ]);
+});
+
+it('shows the formatted car price', function () {
+    Car::factory()
+        ->for(
+            Brand::factory()
+        )
+        ->state([
+            'price' => 10_000,
+        ])
+        ->create();
+
+    Livewire::test(CarList::class)
+        ->assertOk()
+        ->assertSeeText(Number::currency(10_000));
 });
