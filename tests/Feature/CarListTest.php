@@ -72,7 +72,7 @@ it('shows a list of images', function () {
 
     Livewire::test(CarList::class)
         ->assertOk()
-        ->assertSeeText([
+        ->assertSee([
             'image1.jpg', 'image2.jpg', 'image2.jpg'
         ]);
 });
