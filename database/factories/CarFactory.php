@@ -20,7 +20,11 @@ class CarFactory extends Factory
             'model' => fake()->word(),
             'year' => fake()->year(),
             'price' => fake()->numberBetween(5_000, 10_000),
-            'images' => []
+            'images' => [
+                '1.png',
+                '2.png',
+                '3.png',
+            ]
         ];
     }
 }
