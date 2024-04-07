@@ -91,3 +91,33 @@ it('shows the formatted car price', function () {
         ->assertOk()
         ->assertSeeText(Number::currency(10_000));
 });
+
+it('can filter posts by car brand', function () {
+    
+    $cars = Car::factory()->count(10)
+        ->for(Brand::factory())
+        ->create();
+ 
+    $brandId = $cars->first()->brand_id;
+ 
+    Livewire::test(CarList::class)
+        ->assertCanSeeTableRecords($cars)
+        ->filterTable('brand_id', $brandId)
+        ->assertCanSeeTableRecords($cars->where('brand_id', $brandId))
+        ->assertCanNotSeeTableRecords($cars->where('brand_id', '!=', $brandId));
+});
+
+it('can filter posts by car model', function () {
+    
+    $cars = Car::factory()->count(10)
+        ->for(Brand::factory())
+        ->create();
+ 
+    $model = $cars->first()->model;
+ 
+    Livewire::test(CarList::class)
+        ->assertCanSeeTableRecords($cars)
+        ->filterTable('model', $model)
+        ->assertCanSeeTableRecords($cars->where('model', 'LIKE', "%$model%"))
+        ->assertCanNotSeeTableRecords($cars->where('model', 'NOT LIKE', "%$model%"));
+});

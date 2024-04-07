@@ -9,6 +9,9 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Filament\Tables;
+use Filament\Forms;
+use Filament\Tables\Enums\FiltersLayout;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
@@ -36,8 +39,21 @@ class CarList extends Component implements HasTable, HasForms
                 Tables\Columns\Layout\View::make('cars.table.row-content')
             ])
             ->filters([
-                // ...
-            ])
+                Tables\Filters\SelectFilter::make('brand_id')
+                    ->relationship(name: 'brand', titleAttribute: 'name')
+                    ->preload()
+                    ->searchable(),
+                Tables\Filters\Filter::make('model')
+                    ->form([
+                        Forms\Components\TextInput::make('model')
+                            ->label('Car Model')
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query->when($data['model'], function (Builder $query, $model) {
+                            $query->where('model', 'LIKE', "%$model%");
+                        });
+                    })
+            ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
                 // ...
             ])
