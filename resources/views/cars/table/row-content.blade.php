@@ -1,3 +1,3 @@
 <div>
-    <livewire:carousel-card :car="$getRecord()" />
+    <livewire:carousel-card :car="$getRecord()" :key="$getRecord()->id" />
 </div>

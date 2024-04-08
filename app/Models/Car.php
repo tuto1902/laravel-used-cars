@@ -29,7 +29,7 @@ class Car extends Model
     {
         static::deleted(function (Car $car) {
             foreach($car->images as $image) {
-                Storage::delete("public/$image");
+                Storage::delete($image);
             }
         });
 
@@ -38,7 +38,7 @@ class Car extends Model
             $imagesToDelete = array_diff($car->getOriginal('images'), $car->images);
 
             foreach($imagesToDelete as $image) {
-                Storage::delete("public/$image");
+                Storage::delete($image);
             }
         });
     }
