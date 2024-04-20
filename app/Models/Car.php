@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Number;
+use Laravel\Scout\Searchable;
 
 class Car extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $casts = [
         'images' => 'json'
@@ -53,5 +54,15 @@ class Car extends Model
         return Attribute::make(
             get: fn (mixed $value, array $attributes) => Number::currency($attributes['price'])
         );
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'brand' => $this->brand,
+            'model' => $this->model,
+            'year' => $this->year,
+            'price' => $this->price
+        ];
     }
 }

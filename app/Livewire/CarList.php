@@ -40,9 +40,15 @@ class CarList extends Component implements HasTable, HasForms
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('brand_id')
+                    ->label('Brand')
                     ->relationship(name: 'brand', titleAttribute: 'name')
                     ->preload()
-                    ->searchable(),
+                    ->searchable()
+                    ->query(function (Builder $query, array $data) {
+                        return $query->when($data['value'], function (Builder $query, $value) {
+                            $query->whereIn('id', Car::search($value)->keys());
+                        });
+                    }),
                 Tables\Filters\Filter::make('model')
                     ->form([
                         Forms\Components\TextInput::make('model')
@@ -50,8 +56,24 @@ class CarList extends Component implements HasTable, HasForms
                     ])
                     ->query(function (Builder $query, array $data) {
                         return $query->when($data['model'], function (Builder $query, $model) {
-                            $query->where('model', 'LIKE', "%$model%");
+                            $query->whereIn('id', Car::search($model)->keys());
                         });
+                    }),
+                Tables\Filters\Filter::make('year')
+                    ->form([
+                        Forms\Components\TextInput::make('yearFrom')
+                            ->label('From Year'),
+                        Forms\Components\TextInput::make('yearTo')
+                            ->label('To Year')
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when($data['yearFrom'], function (Builder $query, $yearFrom) {
+                                $query->where('year', '>=', $yearFrom);
+                            })
+                            ->when($data['yearTo'], function (Builder $query, $yearTo) {
+                                $query->where('year', '<=', $yearTo);
+                            });
                     })
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
