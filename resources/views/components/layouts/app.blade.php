@@ -16,13 +16,16 @@
         </style>
 
         @filamentStyles
+        @wireUiScripts
         @vite('resources/css/app.css')
     </head>
 
     <body class="antialiased">
-        <div class="p-6">
-            {{ $slot }}
-        </div>
+        <section class="mx-auto max-w-4xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
+            <div class="pt-6">
+                {{ $slot }}
+            </div>
+        </section>
 
         @livewire('notifications')
 
