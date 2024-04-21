@@ -3,6 +3,7 @@
 use App\Livewire\CarList;
 use App\Models\Brand;
 use App\Models\Car;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Number;
 
 it('renders the car list component', function () {
@@ -120,4 +121,27 @@ it('can filter posts by car model', function () {
         ->filterTable('model', $model)
         ->assertCanSeeTableRecords($cars->where('model', 'LIKE', "%$model%"))
         ->assertCanNotSeeTableRecords($cars->where('model', 'NOT LIKE', "%$model%"));
+});
+
+it('can filter posts by a year from', function () {
+    
+    $cars = Car::factory()->count(2)
+        ->state(new Sequence(
+            ['year' => 2018],
+            ['year' => 2016],
+        ))
+        ->for(Brand::factory())
+        ->create();
+ 
+    $yearFrom = 2018;
+
+    Livewire::test(CarList::class)
+        ->assertCanSeeTableRecords($cars)
+        ->filterTable('year', $yearFrom)
+        ->assertCanSeeTableRecords(
+            $cars->where('year', '>=', $yearFrom)
+        )
+        ->assertCanNotSeeTableRecords(
+            $cars->where('year', '<', $yearFrom)
+        );
 });
