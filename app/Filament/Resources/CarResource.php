@@ -51,6 +51,7 @@ class CarResource extends Resource
                     ->schema([
                         Forms\Components\FileUpload::make('images')
                         ->hiddenLabel()
+                        ->reorderable()
                         ->multiple()
                         ->required()
                     ]),
