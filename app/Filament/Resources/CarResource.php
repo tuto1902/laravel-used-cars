@@ -52,6 +52,7 @@ class CarResource extends Resource
                         Forms\Components\FileUpload::make('images')
                         ->hiddenLabel()
                         ->multiple()
+                        ->reorderable()
                         ->required()
                     ]),
             ]);

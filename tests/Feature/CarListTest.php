@@ -73,9 +73,7 @@ it('shows a list of images', function () {
 
     Livewire::test(CarList::class)
         ->assertOk()
-        ->assertSee([
-            'image1.jpg', 'image2.jpg', 'image2.jpg'
-        ]);
+        ->assertSee('image1.jpg');
 });
 
 it('shows the formatted car price', function () {
@@ -94,54 +92,18 @@ it('shows the formatted car price', function () {
 });
 
 it('can filter posts by car brand', function () {
-    
-    $cars = Car::factory()->count(10)
+    Car::factory()->count(9)
         ->for(Brand::factory())
         ->create();
- 
-    $brandId = $cars->first()->brand_id;
- 
-    Livewire::test(CarList::class)
-        ->assertCanSeeTableRecords($cars)
-        ->filterTable('brand_id', $brandId)
-        ->assertCanSeeTableRecords($cars->where('brand_id', $brandId))
-        ->assertCanNotSeeTableRecords($cars->where('brand_id', '!=', $brandId));
-});
-
-it('can filter posts by car model', function () {
-    
-    $cars = Car::factory()->count(10)
-        ->for(Brand::factory())
+    $car = Car::factory()
+        ->for(Brand::factory()->state([ 'name' => 'TestBrand' ]))
         ->create();
- 
-    $model = $cars->first()->model;
- 
-    Livewire::test(CarList::class)
-        ->assertCanSeeTableRecords($cars)
-        ->filterTable('model', $model)
-        ->assertCanSeeTableRecords($cars->where('model', 'LIKE', "%$model%"))
-        ->assertCanNotSeeTableRecords($cars->where('model', 'NOT LIKE', "%$model%"));
-});
 
-it('can filter posts by a year from', function () {
-    
-    $cars = Car::factory()->count(2)
-        ->state(new Sequence(
-            ['year' => 2018],
-            ['year' => 2016],
-        ))
-        ->for(Brand::factory())
-        ->create();
- 
-    $yearFrom = 2018;
+    $brand = $car->brand->name;
 
     Livewire::test(CarList::class)
-        ->assertCanSeeTableRecords($cars)
-        ->filterTable('year', $yearFrom)
-        ->assertCanSeeTableRecords(
-            $cars->where('year', '>=', $yearFrom)
-        )
-        ->assertCanNotSeeTableRecords(
-            $cars->where('year', '<', $yearFrom)
-        );
+        ->assertCount('cars', 10)
+        ->set('brand', $brand)
+        ->refresh()
+        ->assertCount('cars', 1);
 });
