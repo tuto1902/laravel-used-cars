@@ -25,6 +25,10 @@ class Car extends Model
         'price',
         'images',
         'brand_id',
+        'engine',
+        'fuel_type',
+        'transmission_type',
+        'mileage',
     ];
 
     protected static function booted(): void
@@ -57,11 +61,6 @@ class Car extends Model
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
-    }
-
-    public function meta(): HasOne
-    {
-        return $this->hasOne(CarMeta::class);
     }
 
     protected function formattedPrice(): Attribute

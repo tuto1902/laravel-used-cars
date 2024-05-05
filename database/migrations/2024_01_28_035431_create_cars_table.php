@@ -18,10 +18,13 @@ return new class extends Migration
             $table->string('model');
             $table->string('year');
             $table->integer('price');
+            $table->string('engine')->nullable();
+            $table->string('fuel_type')->nullable();
+            $table->string('transmission_type')->nullable();
+            $table->string('mileage')->nullable();
             $table->json('images');
             $table->foreignIdFor(Brand::class)->cascadeOnDelete();
             $table->foreignIdFor(User::class, 'owner_id')->cascadeOnDelete();
-            // $table->foreignId('brand_id')->constrained('brands')->cascadeOnDelete();
             $table->timestamps();
         });
     }

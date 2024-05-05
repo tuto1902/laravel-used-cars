@@ -3,8 +3,15 @@
 use App\Livewire\CarList;
 use App\Models\Brand;
 use App\Models\Car;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Number;
+
+use function Pest\Laravel\actingAs;
+
+beforeEach(function (){
+    actingAs(User::factory()->create());
+});
 
 it('renders the car list component', function () {
     Livewire::test(CarList::class)
@@ -91,7 +98,7 @@ it('shows the formatted car price', function () {
         ->assertSeeText(Number::currency(10_000));
 });
 
-it('can filter posts by car brand', function () {
+it('can filter cars', function () {
     Car::factory()->count(9)
         ->for(Brand::factory())
         ->create();
@@ -99,11 +106,11 @@ it('can filter posts by car brand', function () {
         ->for(Brand::factory()->state([ 'name' => 'TestBrand' ]))
         ->create();
 
-    $brand = $car->brand->name;
+    $search = $car->brand->name;
 
     Livewire::test(CarList::class)
         ->assertCount('cars', 10)
-        ->set('brand', $brand)
+        ->set('brandModelOrYear', $search)
         ->refresh()
         ->assertCount('cars', 1);
 });

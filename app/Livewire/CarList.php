@@ -18,24 +18,20 @@ use Livewire\Component;
 class CarList extends Component
 {
     public Collection $cars;
-    public $brand;
+    public $brandModelOrYear;
     public $model;
 
     public function mount()
     {
         $this->cars = Car::all();
-        $this->brand = '';
-        $this->model = '';
+        $this->brandModelOrYear = '';
     }
 
     public function render()
     {
         $this->cars = Car::query()
         ->when(
-            $this->brand, fn (Builder $query, $brand) => $query->whereIn('id', Car::search($brand)->keys())
-        )
-        ->when(
-            $this->model, fn (Builder $query, $model) => $query->whereIn('id', Car::search($model)->keys())
+            $this->brandModelOrYear, fn (Builder $query, $brandModelOrYear) => $query->whereIn('id', Car::search($brandModelOrYear)->keys())
         )
         ->get();
         return view('livewire.car-list');

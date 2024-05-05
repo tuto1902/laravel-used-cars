@@ -44,6 +44,10 @@ class CarResource extends Resource
                             ->stripCharacters(',')
                             ->numeric()
                             ->required(),
+                        Forms\Components\TextInput::make('engine'),
+                        Forms\Components\TextInput::make('fuel_type'),
+                        Forms\Components\TextInput::make('transmission_type'),
+                        Forms\Components\TextInput::make('mileage'),
                     ]),
                 Forms\Components\Section::make('Car Images')
                     ->hiddenLabel()

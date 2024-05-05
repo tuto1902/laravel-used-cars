@@ -2,10 +2,7 @@
     <x-card title="Search Cars" color="bg-white border border-gray-200">
         <div class="grid grid-cols-1 gap-4">
             <div class="max-w-lg">
-                <x-select label="Brand" wire:model.live="brand" placeholder="Select a car brand" :async-data="route('api.brands.index')" option-label="name" option-value="name" />
-            </div>
-            <div class="max-w-lg">
-                <x-input wire:model.live="model" label="Model" placeholder="Car model" />
+                <x-input wire:model.live="brandModelOrYear" label="Brand, Model Or Year" placeholder="Car brand, model or year" />
             </div>
         </div>
     </x-card>

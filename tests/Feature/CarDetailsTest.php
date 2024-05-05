@@ -47,17 +47,14 @@ it('show the seller contact information', function () {
 
 it('shows car details', function() {
     $car = Car::factory()
+        ->state([
+            'engine' => '2000cc',
+            'fuel_type' => 'Gasoline',
+            'transmission_type' => 'Automatic',
+            'mileage' => '15000 km'
+        ])
         ->for(Brand::factory())
         ->for(User::factory(), 'owner')
-        ->has(
-            CarMeta::factory()
-                ->state([
-                    'engine' => '2000cc',
-                    'fuel_type' => 'Gasoline', 
-                    'transmission_type' => 'Automatic',
-                    'mileage' => '15000 km'
-                ])
-        , 'meta')
         ->create();
     
     Livewire::test(CarDetails::class, ['car' => $car])

@@ -2,8 +2,15 @@
 
 use App\Models\Brand;
 use App\Models\Car;
+use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+
+use function Pest\Laravel\actingAs;
+
+beforeEach(function (){
+    actingAs(User::factory()->create());
+});
 
 test('it has a brand', function () {
     $car = Car::factory()

@@ -36,7 +36,6 @@
                 </p>
             </div>
             <div x-show="active == 'tab-2'" x-cloak>
-                @if($car->meta)
                 <div class="flex flex-col">
                     <div class="-m-1.5 overflow-x-auto">
                         <div class="p-1.5 min-w-full inline-block align-middle">
@@ -48,7 +47,7 @@
                                                 Engine
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                                {{ $car->meta->engine }}
+                                                {{ $car->engine }}
                                             </td>
                                         </tr>
 
@@ -57,7 +56,7 @@
                                                 Fuel Type
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                                {{ $car->meta->fuel_type }}
+                                                {{ $car->fuel_type }}
                                             </td>
                                         </tr>
 
@@ -66,7 +65,7 @@
                                                Type of Transmission 
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                                {{ $car->meta->transmission_type }}
+                                                {{ $car->transmission_type }}
                                             </td>
                                         </tr>
 
@@ -75,7 +74,7 @@
                                                Mileage
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                                {{ $car->meta->mileage }}
+                                                {{ $car->mileage }}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -84,7 +83,6 @@
                         </div>
                     </div>
                 </div>
-                @endif
             </div>
         </div>
     </x-card>
