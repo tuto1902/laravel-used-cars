@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\CarDetails;
 use App\Livewire\CarList;
 use Illuminate\Support\Facades\Route;
 
@@ -14,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', CarList::class);
+Route::get('/', CarList::class)->name('cars');
+Route::get('/{car}', CarDetails::class)->name('cars.show');

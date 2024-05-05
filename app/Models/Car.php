@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Number;
 use Laravel\Scout\Searchable;
@@ -24,6 +25,10 @@ class Car extends Model
         'price',
         'images',
         'brand_id',
+        'engine',
+        'fuel_type',
+        'transmission_type',
+        'mileage',
     ];
 
     protected static function booted(): void
@@ -42,11 +47,20 @@ class Car extends Model
                 Storage::delete($image);
             }
         });
+
+        static::creating(function (Car $car) {
+            $car->owner_id = auth()->user()->id;
+        });
     }
 
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     protected function formattedPrice(): Attribute
